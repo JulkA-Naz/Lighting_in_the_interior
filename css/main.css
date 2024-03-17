@@ -1,0 +1,406 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --index: calc(1vw + 1vh);
+  --gutter: 30px;
+  --side-small: 26;
+  --side-big: 36;
+  --depth: 4700px;
+  --transition: .75s cubic-bezier(.075, .5, 0, 1)
+}
+
+/* Скрываем Scrollbar */
+body {
+  scrollbar-width: none;
+  overflow: -moz-scrollbars-none;
+  /* Firefox */
+}
+
+/* ie 10+ */
+body {
+  -ms-overflow-style: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  /* Safari and Chrome */
+}
+
+@font-face {
+  font-family: JosefinSans;
+  src: url(../fonts/JosefinSans-Light.ttf);
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: JosefinSans;
+  src: url(../fonts/JosefinSans-Thin.ttf);
+  font-weight: 100;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-size: calc(var(--index) * .8);
+  font-family: JosefinSans, sans-serif;
+  line-height: 1.75;
+  height: var(--depth);
+  font-weight: 300;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  perspective: 1500px;
+}
+
+.gallery {
+  transform-style: preserve-3d;
+  height: 100%;
+}
+
+.frame {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition), opacity .75s ease;
+  will-change: transform;
+  transform-style: preserve-3d;
+
+  /*&:last-of-type {
+     background-image: url(/images/last-bg.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }*/
+}
+
+.last-frame>.frame-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.last-frame>p {}
+
+.decor-2 {
+  filter: invert(1);
+  width: 64px;
+}
+
+h1 {
+  padding-top: 9px;
+}
+
+h1,
+h2 {
+  font-family: JosefinSans, sans-serif;
+  font-weight: 100;
+  text-transform: uppercase;
+  width: min-content;
+  line-height: 1;
+}
+
+.frame h2 {
+  text-align: center;
+  font-size: calc(var(--index) * 3.3);
+}
+
+.frame-media {
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+
+.frame-media_left {
+  right: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+}
+
+.frame-media_right {
+  left: calc(var(--side-small) / 2 * var(--index) + var(--gutter));
+}
+
+.frame_bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / .87);
+}
+
+html.light .frame_bg::before {
+  background-color: rgba(235, 220, 178,
+      0.9);
+}
+
+video.frame-media_right {
+  left: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+}
+
+video.frame-media_left {
+  right: calc(var(--side-big) / 2 * var(--index) + var(--gutter));
+}
+
+.text-right>* {
+  position: relative;
+  left: 18vw;
+}
+
+.text-left>* {
+  position: relative;
+  right: 18vw;
+}
+
+.frame h1 {
+  font-size: calc(var(--index) * 3);
+}
+
+.frame p {
+  max-width: 30vw;
+  margin-top: 3vh;
+}
+
+.soundbutton {
+  position: fixed;
+  bottom: 5vh;
+  right: 3vw;
+  cursor: pointer;
+  width: 54px;
+  transition: .25s ease;
+
+  &:hover {
+    filter: brightness(200%);
+  }
+}
+
+.soundbutton.paused {
+  opacity: .55;
+}
+
+.light-decor {
+  position: absolute;
+  top: 15vh;
+  right: 15vw;
+}
+
+.decor-1 {
+  filter: invert(1) opacity(.5);
+  width: 54px;
+  cursor: url(/images/flame.png), auto;
+  transition: var(--transition);
+  animation: 3s linear alternate-reverse infinite stagger;
+
+  &:hover {
+    filter: invert(63%) sepia(93%) saturate(542%) hue-rotate(359deg) brightness(101%) contrast(106%) opacity(.9);
+    animation-play-state: paused;
+  }
+}
+
+
+
+.light-decor:active .ray_box {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+.light-decor:active .frame {
+  transition: 0s;
+}
+
+.light-decor:hover .ray_box {
+  display: block;
+}
+
+#toggle {
+  display: none;
+}
+
+#toggle:checked+.header__button-toggle {
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+.page__theme:checked+img {
+  filter: invert(63%) sepia(93%) saturate(542%) hue-rotate(359deg) brightness(101%) contrast(106%) opacity(.9);
+  animation-play-state: paused;
+}
+
+.header__button-toggle {
+  display: block;
+}
+
+
+
+html.light body {
+  background-color: rgb(235, 220, 178);
+  color: #683322;
+}
+
+html.light h1 {
+  color: #ffa200;
+}
+
+html.light h2,
+html.light h3 {
+  color: #683322;
+}
+
+/* html.light .frame_bg {
+  background-color: rgba(235, 220, 178, 0.9);
+} */
+
+html.light .decor-1 {
+  filter: invert(19%) sepia(27%) saturate(5133%) hue-rotate(320deg) brightness(57%) contrast(53%) opacity(.5);
+
+  &:hover {
+    filter: invert(63%) sepia(68%) saturate(542%) hue-rotate(359deg) brightness(91%) contrast(96%) opacity(.9);
+    animation-play-state: paused;
+  }
+}
+
+html.light .last-frame {
+  color:
+    rgb(235, 220, 178);
+}
+
+html.light .soundbutton {
+  filter: saturate(100%) invert(86%) sepia(48%) saturate(183%) hue-rotate(356deg) brightness(98%) contrast(88%);
+}
+
+html.light .soundbutton.paused {
+  opacity: .8;
+}
+
+.ray_box {
+  display: none;
+  opacity: 0;
+  transition: .5s;
+  visibility: hidden;
+}
+
+.ray {
+  margin-left: 10px;
+  border-radius: 80% 80% 0 0;
+  position: absolute;
+  opacity: 0.4;
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 10% 0%
+  }
+
+  50% {
+    background-position: 91% 100%
+  }
+
+  100% {
+    background-position: 10% 0%
+  }
+}
+
+.ray1 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 187, 0, 0.973) 50%, rgba(255, 255, 186, 0) 80%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 187, 0, 0.973) 50%, rgba(255, 186, 0, 0) 80%);
+  background-size: 200% 150%;
+  animation: gradient-animation 15s ease-in-out infinite alternate-reverse;
+  height: 140px;
+  width: 30px;
+  -webkit-transform: rotate(5deg);
+  top: 60px;
+  left: 5px;
+}
+
+.ray2 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 230, 0, 0.87) 50%, rgba(255, 255, 186, 0) 70%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 230, 0, 0.87) 50%, rgba(255, 186, 0, 0) 70%);
+  background-size: 200% 250%;
+  animation: gradient-animation 13s ease-in infinite alternate-reverse;
+  height: 90px;
+  width: 20px;
+  -webkit-transform: rotate(30deg);
+  top: 60px;
+  left: -30px;
+}
+
+.ray3 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 187, 0, 0.884) 75%, rgba(255, 255, 186, 0) 75%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 187, 0, 0.884) 75%, rgba(255, 186, 0, 0) 75%);
+  background-size: 200% 150%;
+  animation: gradient-animation 10s ease-in-out infinite alternate-reverse;
+  height: 180px;
+  width: 10px;
+  -webkit-transform: rotate(70deg);
+  top: -20px;
+  left: -90px;
+}
+
+.ray4 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 153, 0, 0.9) 50%, rgba(255, 255, 186, 0) 60%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 153, 0, 0.9) 50%, rgba(255, 186, 0, 0) 60%);
+  background-size: 200% 150%;
+  animation: gradient-animation 8s ease-out infinite alternate-reverse;
+  height: 120px;
+  width: 26px;
+  -webkit-transform: rotate(100deg);
+  top: -45px;
+  left: -90px;
+}
+
+.ray5 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 186, 0, 0.8) 50%, rgba(255, 255, 186, 0) 70%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 186, 0, 0.8) 50%, rgba(255, 186, 0, 0) 70%);
+  background-size: 200% 150%;
+  animation: gradient-animation 11s linear infinite alternate-reverse;
+  height: 80px;
+  width: 10px;
+  -webkit-transform: rotate(90deg);
+  top: 5px;
+  left: -90px;
+}
+
+.ray6 {
+  background: -webkit-linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 153, 0, 0.9) 50%, rgba(255, 255, 186, 0) 80%);
+  background: linear-gradient(top, rgba(255, 186, 0, 0) 0%, rgba(255, 153, 0, 0.9) 50%, rgba(255, 186, 0, 0) 80%);
+  background-size: 200% 150%;
+  animation: gradient-animation 7s ease-in-out infinite alternate-reverse;
+  height: 200px;
+  width: 8px;
+  -webkit-transform: rotate(60deg);
+  top: 2px;
+  left: -90px;
+}
+
+@keyframes stagger {
+  0% {
+    transform: rotate(8deg);
+  }
+
+  100% {
+    transform: rotate(-9deg);
+  }
+}
+
+.horizontal {
+  width: calc(var(--index) * var(--side-big));
+  height: calc(var(--index) * var(--side-small));
+}
+
+.vertical {
+  width: calc(var(--index) * var(--side-small));
+  height: calc(var(--index) * var(--side-big));
+}
